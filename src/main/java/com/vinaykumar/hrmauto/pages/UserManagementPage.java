@@ -3,6 +3,7 @@ package com.vinaykumar.hrmauto.pages;
 import com.vinaykumar.hrmauto.base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class UserManagementPage extends BasePage {
 
@@ -33,6 +34,8 @@ public class UserManagementPage extends BasePage {
     private By saveButton = By.xpath("//button[normalize-space()='Save']");
 
     private By successToast = By.xpath("//p[contains(., 'Successfully Saved')]");
+
+    private By searchButton = By.xpath("//button[normalize-space()='Search']");
 
     public UserManagementPage(WebDriver driver) {
         super(driver);
@@ -88,5 +91,20 @@ public class UserManagementPage extends BasePage {
         sendText(employeeNameInput, partial);
         waitForListToSettle(employeeSuggestions);
         click(firstEmployeeSuggestion);
+    }
+
+    public boolean isUserInTable(String username) {
+        By row = By.xpath("//div[contains(text(),'" + username + "')]/ancestor::div[contains(@class,'oxd-table-row')]");
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(row));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void searchByUsername(String username) {
+        sendText(usernameInput, username);
+        click(searchButton);
     }
 }
