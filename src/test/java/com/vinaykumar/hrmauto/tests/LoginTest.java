@@ -7,7 +7,7 @@ import com.vinaykumar.hrmauto.pages.LoginPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class FirstTest extends BaseTest {
+public class LoginTest extends BaseTest {
 
     @Test
     public void loginWorks() {

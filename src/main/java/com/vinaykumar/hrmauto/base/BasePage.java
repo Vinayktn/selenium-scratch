@@ -32,4 +32,28 @@ public class BasePage {
     protected String getText(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).getText();
     }
+
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
+    }
+
+    protected void waitForListToSettle(By locator) {
+        int previousCount = -1;
+        for (int i = 0; i < 10; i++) {
+            int currentCount = driver.findElements(locator).size();
+
+            if (previousCount == currentCount && currentCount > 0)
+                return;
+            else
+                previousCount = currentCount;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                // nothing to do here - we are just pausing between counts
+            }
+        }
+    }
+
 }
+
+
