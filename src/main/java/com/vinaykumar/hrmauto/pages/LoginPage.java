@@ -11,7 +11,7 @@ public class LoginPage extends BasePage {
     private By loginButton = By.cssSelector("button[type='submit']");
     private By errorMessage = By.xpath("//p[contains(., 'Invalid credentials')]");
 
-    //  constructor — takes a WebDriver called 'driver' as its parameter, assigns it to the field above using 'this.driver = driver;'
+    // Call the parent class (BasePage) constructor with this driver.
     public LoginPage(WebDriver driver) {
         super(driver);
     }

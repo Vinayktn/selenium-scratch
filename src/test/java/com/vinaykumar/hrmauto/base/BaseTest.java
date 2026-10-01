@@ -17,7 +17,7 @@ public class BaseTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
-        driver.set(DriverFactory.create(ConfigReader.get("browser")));
+        driver.set(DriverFactory.create());
     }
 
     @AfterMethod(alwaysRun = true)
