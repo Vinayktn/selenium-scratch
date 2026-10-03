@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 public class UserManagementTest extends BaseTest {
     private static final String TEST_PASSWORD = "Vinay@1234";
     private static final String EMPLOYEE_NAME_PARTIAL = "a";
+
     @Test
     public void createsUserSuccessfully() {
         getDriver().get(ConfigReader.get("base.url"));
@@ -92,5 +93,4 @@ public class UserManagementTest extends BaseTest {
         Assert.assertTrue(manageUser.isUserInTable(username), "User not found in table");
         TestListener.getTest().log(Status.PASS, "user found in table");
     }
-
 }
