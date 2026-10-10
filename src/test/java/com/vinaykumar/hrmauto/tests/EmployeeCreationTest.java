@@ -15,7 +15,7 @@ public class EmployeeCreationTest extends BaseTest {
 
 
     @Test
-    public void employeeCreation() {
+    public void employeeCreation() throws InterruptedException {
         getDriver().get(ConfigReader.get("base.url"));
         new LoginPage(getDriver()).login("Admin", "admin123");
 

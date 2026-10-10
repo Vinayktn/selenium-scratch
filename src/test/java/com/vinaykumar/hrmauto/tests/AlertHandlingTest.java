@@ -15,7 +15,7 @@ import java.util.Map;
 public class AlertHandlingTest extends BaseTest {
 
     @Test(priority = 2)
-    public void testAcceptAlert() {
+    public void testAcceptAlert() throws InterruptedException {
         // 1. Login
         getDriver().get(ConfigReader.get("base.url"));
         new LoginPage(getDriver()).login("Admin", "admin123");
@@ -90,7 +90,7 @@ public class AlertHandlingTest extends BaseTest {
     }
 
     @Test(priority = 1)
-    public void testDismissAlert() {
+    public void testDismissAlert() throws InterruptedException {
         // 1. Login
         getDriver().get(ConfigReader.get("base.url"));
         new LoginPage(getDriver()).login("Admin", "admin123");

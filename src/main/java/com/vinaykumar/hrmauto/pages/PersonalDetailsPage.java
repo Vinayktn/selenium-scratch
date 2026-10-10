@@ -33,6 +33,9 @@ public class PersonalDetailsPage extends BasePage {
 
     private By personalDetailsOption = By.xpath("//a[normalize-space()='Personal Details']");
 
+    private By contactDetailsTab = By.xpath("//a[normalize-space()='Contact Details']");
+
+
     //constructor injection
     public PersonalDetailsPage(WebDriver driver) {
         super(driver);
@@ -42,9 +45,26 @@ public class PersonalDetailsPage extends BasePage {
         return By.xpath("//div[@class='oxd-calendar-date' and text()='" + day + "']");
     }
 
-    public void clickDateOfBirthIcon() {
-        waitForFormLoaderToDisappear();
-        click(dateOfBirthIcon);
+    public void clickDateOfBirthIcon() throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+
+        // Wait for loader to disappear
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(
+                By.xpath("//div[@class='oxd-form-loader']")
+        ));
+
+        // Add extra wait to ensure loader stays gone
+        Thread.sleep(500);
+
+        // Use JavaScript to click
+        try {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].click();", driver.findElement(dateOfBirthIcon));
+        } catch (StaleElementReferenceException e) {
+            // Element became stale, find it again
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].click();", driver.findElement(dateOfBirthIcon));
+        }
     }
 
     public void selectYearFromCalendar(String year) {
@@ -62,6 +82,10 @@ public class PersonalDetailsPage extends BasePage {
     }
 
     public void selectDayFromCalendar(String day) {
+        // Wait for the calendar dates to be visible/clickable after month selection
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(getCalendarDayButton(day)));
+
         click(getCalendarDayButton(day));
     }
 
@@ -150,5 +174,9 @@ public class PersonalDetailsPage extends BasePage {
     public void clickPersonalDetailsOption()
     {
         click(personalDetailsOption);
+    }
+
+    public void clickContactDetailsTab() {
+        click(contactDetailsTab);
     }
 }
