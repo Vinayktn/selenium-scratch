@@ -2,6 +2,7 @@ package com.vinaykumar.hrmauto.tests;
 
 import com.vinaykumar.hrmauto.base.BaseTest;
 import com.vinaykumar.hrmauto.config.ConfigReader;
+import com.vinaykumar.hrmauto.listeners.TestListener;
 import com.vinaykumar.hrmauto.pages.LoginPage;
 import com.vinaykumar.hrmauto.utils.JsonUtil;
 import org.testng.Assert;
@@ -21,6 +22,10 @@ public class DataDrivenLoginTest extends BaseTest {
     @Test(dataProvider = "loginData")
     public void testLogin(String username, String password, boolean shouldSucceed) {
         getDriver().get(ConfigReader.get("base.url"));
+
+        // Log test data to Extent Report for visibility — shows which credentials are being tested and expected outcome
+        TestListener.getTest().info("Username: " + username + " | Password: " + password + " | Expected: " + (shouldSucceed ? "SUCCESS" : "FAIL"));
+
         new LoginPage(getDriver()).login(username, password);
 
         // Check result based on shouldSucceed flag

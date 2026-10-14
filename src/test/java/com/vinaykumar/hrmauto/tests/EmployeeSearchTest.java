@@ -2,6 +2,7 @@ package com.vinaykumar.hrmauto.tests;
 
 import com.vinaykumar.hrmauto.base.BaseTest;
 import com.vinaykumar.hrmauto.config.ConfigReader;
+import com.vinaykumar.hrmauto.listeners.TestListener;
 import com.vinaykumar.hrmauto.pages.AddEmployeePage;
 import com.vinaykumar.hrmauto.pages.EmployeeListPage;
 import com.vinaykumar.hrmauto.pages.LoginPage;
@@ -18,6 +19,7 @@ public class EmployeeSearchTest extends BaseTest {
     public void employeeSearchTest() throws InterruptedException {
         getDriver().get(ConfigReader.get("base.url"));
         new LoginPage(getDriver()).login("Admin", "admin123");
+        TestListener.getTest().info("✓ Logged in successfully");
 
         String year = "1990";
         String month = "May";
@@ -51,6 +53,7 @@ public class EmployeeSearchTest extends BaseTest {
         addPage.enterFirstName(firstName);
         addPage.enterLastName(lastName);
         addPage.clickSaveAndWaitForNavigation();
+        TestListener.getTest().info("✓ Employee created with name: " + firstName + " " + lastName);
 
         //Fill all personal details
         PersonalDetailsPage personalPage = new PersonalDetailsPage(getDriver());
@@ -63,6 +66,7 @@ public class EmployeeSearchTest extends BaseTest {
         personalPage.selectMaritalStatus(maritalStatus);
         personalPage.selectGender(gender);
         personalPage.clickPersonalDetailsSave();
+        TestListener.getTest().info("✓ Personal details saved - DOB: " + day + " " + month + " " + year);
 
         //Search Employee and verify
         EmployeeListPage searchEmployee = new EmployeeListPage(getDriver());
@@ -71,7 +75,10 @@ public class EmployeeSearchTest extends BaseTest {
         searchEmployee.searchByEmployeeName(fullName);
         System.out.println(fullName);
         searchEmployee.waitForSearchResultsToSettle();
+        TestListener.getTest().info("✓ Searched for employee: " + fullName);
+
         boolean found = searchEmployee.verifyEmployeeInResults(fullName);
         Assert.assertTrue(found, "Employee not found in search results");
+        TestListener.getTest().info("✓ Employee found in search results");
     }
 }

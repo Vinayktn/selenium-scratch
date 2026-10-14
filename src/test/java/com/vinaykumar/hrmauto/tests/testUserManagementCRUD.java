@@ -7,7 +7,7 @@ import com.vinaykumar.hrmauto.utils.ExcelUtil;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
+import com.vinaykumar.hrmauto.listeners.TestListener;
 import java.io.IOException;
 
 
@@ -28,6 +28,7 @@ public class testUserManagementCRUD extends BaseTest {
     ) {
         // Add timestamp to make username unique across runs
         String uniqueUsername = username + "_" + System.currentTimeMillis();
+        TestListener.getTest().info("Employee: " + employeeName + " | Role: " + userRole + " | Username: " + uniqueUsername);
 
         // Login
         getDriver().get(ConfigReader.get("base.url"));

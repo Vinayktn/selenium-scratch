@@ -2,6 +2,7 @@ package com.vinaykumar.hrmauto.tests;
 
 import com.vinaykumar.hrmauto.base.BaseTest;
 import com.vinaykumar.hrmauto.config.ConfigReader;
+import com.vinaykumar.hrmauto.listeners.TestListener;
 import com.vinaykumar.hrmauto.pages.AddEmployeePage;
 import com.vinaykumar.hrmauto.pages.LoginPage;
 import com.vinaykumar.hrmauto.pages.PersonalDetailsPage;
@@ -18,6 +19,7 @@ public class EmployeeCreationTest extends BaseTest {
     public void employeeCreation() throws InterruptedException {
         getDriver().get(ConfigReader.get("base.url"));
         new LoginPage(getDriver()).login("Admin", "admin123");
+        TestListener.getTest().info("✓ Logged in successfully");
 
         String year = "1990";
         String month = "May";
@@ -51,6 +53,7 @@ public class EmployeeCreationTest extends BaseTest {
         addPage.enterFirstName(firstName);
         addPage.enterLastName(lastName);
         addPage.clickSaveAndWaitForNavigation();
+        TestListener.getTest().info("✓ Employee created with name: " + firstName + " " + lastName);
 
         //Fill all personal details
         PersonalDetailsPage personalPage = new PersonalDetailsPage(getDriver());
@@ -63,10 +66,12 @@ public class EmployeeCreationTest extends BaseTest {
         personalPage.selectMaritalStatus(maritalStatus);
         personalPage.selectGender(gender);
         personalPage.clickPersonalDetailsSave();
+        TestListener.getTest().info("✓ Personal details saved - DOB: " + day + " " + month + " " + year);
 
         // Now upload photo
         personalPage.clickProfileImage();
         personalPage.uploadPhoto("C:\\Users\\kumarv\\Downloads\\sundar_pichai_small.jpg");
+        TestListener.getTest().info("✓ Profile photo uploaded successfully");
 
         // Navigate back to Personal Details
         getDriver().navigate().back();
@@ -75,9 +80,14 @@ public class EmployeeCreationTest extends BaseTest {
         String expectedDate = year + "-" + day + "-" + monthMap.get(month);  // yyyy-dd-mm format
         String savedDate = personalPage.getDateOfBirthValue();
         Assert.assertEquals(savedDate, expectedDate);
+        TestListener.getTest().info("✓ Date of birth verified: " + expectedDate);
+
         String actualUrl = personalPage.getCurrentUrl();
         System.out.println("Actual URL: " + actualUrl);
         Assert.assertTrue(personalPage.getCurrentUrl().contains("viewPersonalDetails"));
+        TestListener.getTest().info("✓ Redirected to Personal Details page");
+
         Assert.assertEquals(personalPage.getEmployeeName(firstName + " " + lastName), firstName + " " + lastName);
+        TestListener.getTest().info("✓ Employee name verified: " + firstName + " " + lastName);
     }
 }

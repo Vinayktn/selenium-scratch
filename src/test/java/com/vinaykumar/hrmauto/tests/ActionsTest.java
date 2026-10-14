@@ -2,6 +2,7 @@ package com.vinaykumar.hrmauto.tests;
 
 import com.vinaykumar.hrmauto.base.BaseTest;
 import com.vinaykumar.hrmauto.config.ConfigReader;
+import com.vinaykumar.hrmauto.listeners.TestListener;
 import com.vinaykumar.hrmauto.pages.AddEmployeePage;
 import com.vinaykumar.hrmauto.pages.EmployeeListPage;
 import com.vinaykumar.hrmauto.pages.LoginPage;
@@ -16,6 +17,7 @@ public class ActionsTest extends BaseTest {
         // Login
         getDriver().get(ConfigReader.get("base.url"));
         new LoginPage(getDriver()).login("Admin", "admin123");
+        TestListener.getTest().info("✓ Logged in successfully");
 
         // Navigate to Employee List
         AddEmployeePage addPage = new AddEmployeePage(getDriver());
@@ -26,7 +28,10 @@ public class ActionsTest extends BaseTest {
 
         // Call hoverAndClickEditButton method
         new EmployeeListPage(getDriver()).hoverAndClickEditButton("Jane", "Citizen");
+        TestListener.getTest().info("✓ Hovered and clicked edit button for Jane Citizen");
 
         // Assert URL contains /viewPersonalDetails/
-        Assert.assertTrue(getDriver().getCurrentUrl().contains("viewPersonalDetails"));    }
+        Assert.assertTrue(getDriver().getCurrentUrl().contains("viewPersonalDetails"));
+        TestListener.getTest().info("✓ Successfully navigated to employee details page");
+    }
 }

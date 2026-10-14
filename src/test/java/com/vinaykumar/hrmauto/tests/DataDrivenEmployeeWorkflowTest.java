@@ -2,6 +2,7 @@ package com.vinaykumar.hrmauto.tests;
 
 import com.vinaykumar.hrmauto.base.BaseTest;
 import com.vinaykumar.hrmauto.config.ConfigReader;
+import com.vinaykumar.hrmauto.listeners.TestListener;
 import com.vinaykumar.hrmauto.pages.*;
 import com.vinaykumar.hrmauto.utils.ExcelUtil;
 import org.openqa.selenium.ElementClickInterceptedException;
@@ -40,6 +41,10 @@ public class DataDrivenEmployeeWorkflowTest extends BaseTest {
 
         //login workflow
         getDriver().get(ConfigReader.get("base.url"));
+
+        // Log test parameters to report for debugging and traceability
+        TestListener.getTest().info("Employee: " + firstName + " " + lastName + " | DOB: " + dateOfBirth + " | Nationality: " + nationality + " | Email: " + email + " | Phone: " + phone);
+
         new LoginPage(getDriver()).login("admin", "admin123");
 
         // STEP 1: InValid data workflow

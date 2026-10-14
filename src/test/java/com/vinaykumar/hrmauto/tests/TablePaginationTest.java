@@ -2,6 +2,7 @@ package com.vinaykumar.hrmauto.tests;
 
 import com.vinaykumar.hrmauto.base.BaseTest;
 import com.vinaykumar.hrmauto.config.ConfigReader;
+import com.vinaykumar.hrmauto.listeners.TestListener;
 import com.vinaykumar.hrmauto.pages.AddEmployeePage;
 import com.vinaykumar.hrmauto.pages.EmployeeListPage;
 import com.vinaykumar.hrmauto.pages.LoginPage;
@@ -28,6 +29,7 @@ public class TablePaginationTest extends BaseTest {
         // 3. Get page 1 employee names
         List<String> firstPage = searchEmployee.getEmployeeNamesOnPage();
         System.out.println("Page 1: " + firstPage);
+        TestListener.getTest().info("✓ Page 1 loaded - " + firstPage.size() + " employees displayed");
 
         // 4. Click Next
         searchEmployee.clickNextPage();
@@ -36,9 +38,11 @@ public class TablePaginationTest extends BaseTest {
         // 5. Get page 2 employee names
         List<String> secondPage = searchEmployee.getEmployeeNamesOnPage();
         System.out.println("Page 2: " + secondPage);
+        TestListener.getTest().info("✓ Page 2 loaded - " + secondPage.size() + " employees displayed");
 
         // 6. Assert page 1 != page 2
         Assert.assertNotEquals(firstPage, secondPage);
+        TestListener.getTest().info("✓ Page 2 data is different from Page 1 - Pagination working");
 
         // 7. Click Previous
         searchEmployee.clickPreviousPage();
@@ -47,5 +51,6 @@ public class TablePaginationTest extends BaseTest {
         // 8. Assert current page is 1
         String currentPageNumber = searchEmployee.getCurrentPageNumber();
         Assert.assertEquals(currentPageNumber, "1");
+        TestListener.getTest().info("✓ Returned to Page 1 - Pagination backward working");
     }
 }
