@@ -1,0 +1,57 @@
+{
+  "validData": [
+    {
+      "employeeName": "Priya Sharma",
+      "userRole": "Admin",
+      "status": "Enabled",
+      "username": "priya.sharma.2024",
+      "password": "PriyaSharma@2024"
+    },
+    {
+      "employeeName": "Marcus Wellington",
+      "userRole": "ESS",
+      "status": "Enabled",
+      "username": "marcus.wellington.2024",
+      "password": "MarcusWellington@2024"
+    },
+    {
+      "employeeName": "Sofia Hernandez",
+      "userRole": "Admin",
+      "status": "Disabled",
+      "username": "sofia.hernandez.2024",
+      "password": "SofiaHernandez@2024"
+    }
+  ],
+  "invalidData": [
+    {
+      "employeeName": "Priya Sharma",
+      "userRole": "Admin",
+      "status": "Enabled",
+      "username": "priya.sharma.2024",
+      "password": "PriyaSharma@2024"
+    },
+    {
+      "employeeName": "Marcus Wellington",
+      "userRole": "Admin",
+      "status": "Enabled",
+      "username": "marcus.test",
+      "password": "weak"
+    }
+  ],
+  "edgeCases": [
+    {
+      "employeeName": "Sofia Hernandez",
+      "userRole": "ESS",
+      "status": "Enabled",
+      "username": "sofia_edge_case_very_long_username_testing_2024",
+      "password": "EdgeCasePass@456"
+    },
+    {
+      "employeeName": "Priya Sharma",
+      "userRole": "Admin",
+      "status": "Enabled",
+      "username": "priya_special_#test_001",
+      "password": "SpecialChar@Pass789"
+    }
+  ]
+}

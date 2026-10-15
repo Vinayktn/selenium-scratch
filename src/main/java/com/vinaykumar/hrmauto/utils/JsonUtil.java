@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * JsonUtil — Reads JSON test data files and converts them to Object[][] format for TestNG @DataProvider
@@ -26,13 +28,13 @@ public class JsonUtil {
      * @param filePath Path to JSON file (e.g., "src/test/resources/loginData.json")
      * @return Object[][] where each row = one test scenario, each column = one parameter
      * @throws IOException If file not found or cannot be read
-     *
-     * FLOW:
-     *   JSON file → Read as bytes → Decode to String → Parse with GSON → Convert to Object[][]
-     *
-     * EXAMPLE:
-     *   JSON: [{"username":"Admin", "password":"admin123", "expectedResult":true}]
-     *   Result: Object[1][3] = [["Admin", "admin123", true]]
+     *                     <p>
+     *                     FLOW:
+     *                     JSON file → Read as bytes → Decode to String → Parse with GSON → Convert to Object[][]
+     *                     <p>
+     *                     EXAMPLE:
+     *                     JSON: [{"username":"Admin", "password":"admin123", "expectedResult":true}]
+     *                     Result: Object[1][3] = [["Admin", "admin123", true]]
      */
     public static Object[][] readJsonData(String filePath) throws IOException {
 
@@ -139,4 +141,28 @@ public class JsonUtil {
 
         return testData;
     }
+
+    // This method handles the NESTED structure (validData, invalidData, edgeCases readJsonData() stays unchanged for simple arrays
+    public static Object[][] readUserDataJSON(String filePath) throws IOException {
+        Path path = Paths.get(filePath);
+        byte[] fileBytes = Files.readAllBytes(path);
+        String jsonString = new String(fileBytes);
+        Gson gson = new Gson();
+        UserDataWrapper wrapper = gson.fromJson(jsonString, UserDataWrapper.class);
+        List<UserData> allUserData = new ArrayList<>();
+        allUserData.addAll(wrapper.validData);
+        allUserData.addAll(wrapper.invalidData);
+        allUserData.addAll(wrapper.edgeCases);
+        Object[][] testData = new Object[allUserData.size()][5];
+
+        for (int i = 0; i < allUserData.size(); i++) {
+            UserData userData = allUserData.get(i);  // Get the UserData object
+            testData[i][0] = userData.employeeName;   // Column 0
+            testData[i][1] = userData.userRole;       // Column 1
+            testData[i][2] = userData.status;         // Column 2
+            testData[i][3] = userData.username;       // Column 3
+            testData[i][4] = userData.password;       // Column 4
+    }
+        return testData;
+}
 }
